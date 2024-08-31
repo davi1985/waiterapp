@@ -8,6 +8,9 @@ import { createCategory } from "./app/usecases/categories/create-category";
 import { listProducts } from "./app/usecases/products/list-products";
 import { createProduct } from "./app/usecases/products/create-product";
 import { listProductsByCategory } from "./app/usecases/categories/list-products-by-category";
+import { listOrders } from "./app/usecases/orders/list-orders";
+import { cancelOrder } from "./app/usecases/orders/cancel-order";
+import { createOrder } from "./app/usecases/orders/create-order";
 
 export const router = Router();
 
@@ -29,15 +32,8 @@ router.get("/categories/:categoryId/products", listProductsByCategory);
 router.get("/products", listProducts);
 router.post("/products", upload.single("image"), createProduct);
 
-// List orders
-router.get("/orders", (req, res) => {
-  res.send("all orders");
-});
-
-// Create order
-router.post("/orders", (req, res) => {
-  res.send("save categories");
-});
+router.get("/orders", listOrders);
+router.post("/orders", createOrder);
 
 // Change order status
 router.patch("/orders/:orderId", (req, res) => {
