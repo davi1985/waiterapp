@@ -1,7 +1,7 @@
-import { useState } from 'react'
 import { Order } from '../../@types'
 import { OrderModal } from '../OrderModal'
 import { Board, OrdersContainer } from './styles'
+import { useOrderBoard } from './useOrderBoard'
 
 type Props = {
   icon: string
@@ -10,18 +10,12 @@ type Props = {
 }
 
 export const OrdersBoard = ({ icon, title, orders }: Props) => {
-  const [isModalVisible, setIsModalVisible] = useState(false)
-  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
-
-  const handleOpenOrderModal = (order: Order) => {
-    setIsModalVisible(true)
-    setSelectedOrder(order)
-  }
-
-  const handleCloseOrderModal = () => {
-    setIsModalVisible(false)
-    setSelectedOrder(null)
-  }
+  const {
+    isModalVisible,
+    selectedOrder,
+    handleOpenOrderModal,
+    handleCloseOrderModal,
+  } = useOrderBoard()
 
   return (
     <Board>
