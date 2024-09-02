@@ -48,9 +48,8 @@ export const GlobalStyles = createGlobalStyle`
     font-family: GeneralSans, sans-serif;
   }
 
-  body {
-    background: #fafafa;
-    color: #333;
+  #root {
+    height: 100vh;
   }
 
   button {

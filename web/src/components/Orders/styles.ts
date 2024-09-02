@@ -6,4 +6,6 @@ export const Container = styled.section`
   margin: 2.5rem auto;
   display: flex;
   gap: 2rem;
+  padding: 0 0.5rem;
+  height: 450px;
 `
