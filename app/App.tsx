@@ -1,6 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native'
-
 import { useFonts } from 'expo-font'
+import { Main } from './src/Main'
 import { StatusBar } from 'expo-status-bar'
 
 const App = () => {
@@ -12,22 +11,11 @@ const App = () => {
   })
 
   return isFontsLoaded ? (
-    <View style={styles.container}>
-      <Text style={{ fontFamily: 'GeneralSans-400' }}>
-        Open up App.tsx to start working on your app!
-      </Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <StatusBar style="dark" />
+      <Main />
+    </>
   ) : null
 }
 
 export default App
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-})
