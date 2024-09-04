@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "expo": "~51.0.28",
+    "expo-font": "~12.0.10",
     "expo-status-bar": "~1.12.1",
     "react": "18.2.0",
     "react-native": "0.74.5",
@@ -21,7 +22,7 @@
     "@types/react": "~18.2.45",
     "@typescript-eslint/eslint-plugin": "^8.4.0",
     "@typescript-eslint/parser": "^8.4.0",
-    "eslint": "^9.9.1",
+    "eslint": "^8.9.1",
     "eslint-plugin-react": "^7.35.2",
     "typescript": "^5.1.3"
   },
