@@ -9,24 +9,22 @@ import {
   FooterContainer,
 } from './styles'
 
-export const Main = () => {
-  return (
-    <>
-      <Container>
-        <Header />
+export const Main = () => (
+  <>
+    <Container>
+      <Header />
 
-        <CategoriesContainer>
-          <Categories />
-        </CategoriesContainer>
+      <CategoriesContainer>
+        <Categories />
+      </CategoriesContainer>
 
-        <MenuContainer>
-          <Menu />
-        </MenuContainer>
-      </Container>
+      <MenuContainer>
+        <Menu />
+      </MenuContainer>
+    </Container>
 
-      <Footer>
-        <FooterContainer />
-      </Footer>
-    </>
-  )
-}
+    <Footer>
+      <FooterContainer />
+    </Footer>
+  </>
+)
