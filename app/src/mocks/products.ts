@@ -3,7 +3,7 @@ export const products = [
     _id: '6372e040f52e37ef85fe2c5e',
     name: 'Pizza quatro queijos',
     description: 'Deliciosa pizza quatro queijos com borda simples',
-    imagePath: '1671336669119-frango-catupiry.png',
+    imagePath: '1725129903187-quatro-queijos.png',
     price: 40,
     ingredients: [
       {
@@ -32,7 +32,7 @@ export const products = [
     _id: '6372e276a381106c0f854cb3',
     name: 'Coca cola',
     description: 'Coca cola lata geladinha topzera',
-    imagePath: '1671343203320-coca-cola.png',
+    imagePath: '1725130825133-coca-cola.png',
     price: 7,
     ingredients: [],
   },
