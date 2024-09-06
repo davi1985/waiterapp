@@ -15,6 +15,7 @@ export const TableModal = ({ visible, onClose, onSave }: Props) => {
   const [table, setTable] = useState('')
 
   const handleSave = () => {
+    setTable('')
     onSave(table)
     onClose()
   }
@@ -35,6 +36,7 @@ export const TableModal = ({ visible, onClose, onSave }: Props) => {
 
           <Form>
             <Input
+              value={table}
               placeholder="Número da mesa"
               placeholderTextColor={'#777'}
               keyboardType="number-pad"

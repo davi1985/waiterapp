@@ -1,17 +1,15 @@
+import { TouchableOpacity } from 'react-native'
 import { Text } from '../Text'
-import { Container } from './styles'
+import { Container, Content, OrderHeader, Table } from './styles'
 
 type Props = {
-  table?: string
+  selectedTable: string
+  onCancelOrder: () => void
 }
 
-export const Header = ({ table }: Props) => (
+export const Header = ({ selectedTable, onCancelOrder }: Props) => (
   <Container>
-    {table ? (
-      <Text size={14} opacity={0.9}>
-        Pedido da mesa #{table}
-      </Text>
-    ) : (
+    {!selectedTable && (
       <>
         <Text size={14} opacity={0.9}>
           Bem vindo(a) ao
@@ -22,6 +20,26 @@ export const Header = ({ table }: Props) => (
           <Text size={24}>APP</Text>
         </Text>
       </>
+    )}
+
+    {selectedTable && (
+      <Content>
+        <OrderHeader>
+          <Text weight="600" size={24}>
+            Pedido
+          </Text>
+
+          <TouchableOpacity onPress={onCancelOrder}>
+            <Text color="#d73035" weight="600" size={14}>
+              Cancelar Pedido
+            </Text>
+          </TouchableOpacity>
+        </OrderHeader>
+
+        <Table>
+          <Text color="#777">Mesa #{selectedTable}</Text>
+        </Table>
+      </Content>
     )}
   </Container>
 )

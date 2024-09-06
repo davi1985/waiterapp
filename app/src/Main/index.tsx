@@ -23,10 +23,17 @@ export const Main = () => {
     setSelectedTable(table)
   }
 
+  const handleCancelOrder = () => {
+    setSelectedTable('')
+  }
+
   return (
     <>
       <Container>
-        <Header table={selectedTable} />
+        <Header
+          selectedTable={selectedTable}
+          onCancelOrder={handleCancelOrder}
+        />
 
         <CategoriesContainer>
           <Categories />
