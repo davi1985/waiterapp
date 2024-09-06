@@ -1,8 +1,6 @@
 import styled from 'styled-components/native'
 
-export const Container = styled.View``
-
-export const Product = styled.TouchableOpacity`
+export const ProductContainer = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
 `
