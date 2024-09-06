@@ -10,3 +10,8 @@ export type Product = {
     _id: string
   }[]
 }
+
+export type CartItem = {
+  product: Product
+  quantity: number
+}

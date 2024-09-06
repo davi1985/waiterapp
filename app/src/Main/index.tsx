@@ -11,21 +11,30 @@ import {
   Footer,
   FooterContainer,
 } from './styles'
+import { Cart } from '../components/Cart'
+import { CartItem } from '../@types'
+import { products } from '../mocks/products'
 
 export const Main = () => {
   const [isTableModalVisible, setIsTableModalVisible] = useState(false)
   const [selectedTable, setSelectedTable] = useState('')
+  const [cartItems, setCartItems] = useState<CartItem[]>([
+    {
+      product: products[0],
+      quantity: 1,
+    },
+    {
+      product: products[1],
+      quantity: 2,
+    },
+  ])
 
   const handleOpenModal = () => setIsTableModalVisible(true)
   const handleCloseModal = () => setIsTableModalVisible(false)
 
-  const handleSaveTable = (table: string) => {
-    setSelectedTable(table)
-  }
+  const handleSaveTable = (table: string) => setSelectedTable(table)
 
-  const handleCancelOrder = () => {
-    setSelectedTable('')
-  }
+  const handleCancelOrder = () => setSelectedTable('')
 
   return (
     <>
@@ -49,6 +58,8 @@ export const Main = () => {
           {!selectedTable && (
             <Button onPress={handleOpenModal}>Novo pedido</Button>
           )}
+
+          {selectedTable && <Cart cartItems={cartItems} />}
         </FooterContainer>
       </Footer>
 
