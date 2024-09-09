@@ -20,9 +20,20 @@ type Props = {
   visible: boolean
   onClose: () => void
   product: Product | null
+  onAddToCart: (product: Product) => void
 }
 
-export const ProductModal = ({ visible, onClose, product }: Props) => {
+export const ProductModal = ({
+  visible,
+  onClose,
+  product,
+  onAddToCart,
+}: Props) => {
+  const handleAddToCart = () => {
+    onAddToCart(product!)
+    onClose()
+  }
+
   if (!product) {
     return null
   }
@@ -85,9 +96,7 @@ export const ProductModal = ({ visible, onClose, product }: Props) => {
             </Text>
           </Price>
 
-          <Button onPress={() => alert('adicionar ao pedido')}>
-            Adicionar ao pedido
-          </Button>
+          <Button onPress={handleAddToCart}>Adicionar ao pedido</Button>
         </FooterContainer>
       </Footer>
     </Modal>

@@ -1,5 +1,5 @@
 import { FlatList, TouchableOpacity } from 'react-native'
-import { CartItem } from '../../@types'
+import { CartItem, Product } from '../../@types'
 import { Text } from '../Text'
 import {
   Actions,
@@ -18,10 +18,17 @@ import { formatCurrency } from '../../utils/formatCurrency'
 
 type Props = {
   cartItems: CartItem[]
+  onAdd: (product: Product) => void
+  onRemoveItem: (product: Product) => void
 }
 
-export const Cart = ({ cartItems }: Props) => {
+export const Cart = ({ cartItems, onAdd, onRemoveItem }: Props) => {
   const cartIsEmpty = Boolean(cartItems.length)
+
+  const total = cartItems.reduce(
+    (acc, item) => acc + item.quantity * item.product.price,
+    0,
+  )
 
   return (
     <>
@@ -57,11 +64,13 @@ export const Cart = ({ cartItems }: Props) => {
               </ProductContainer>
 
               <Actions>
-                <TouchableOpacity onPress={() => alert('+')}>
+                <TouchableOpacity onPress={() => onAdd(cartItem.product)}>
                   <PlusCircle />
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => alert('-')}>
+                <TouchableOpacity
+                  onPress={() => onRemoveItem(cartItem.product)}
+                >
                   <MinusCircle />
                 </TouchableOpacity>
               </Actions>
@@ -78,7 +87,7 @@ export const Cart = ({ cartItems }: Props) => {
               <Text color={'#777'}>Total</Text>
 
               <Text weight="600" size={20}>
-                {formatCurrency(120)}
+                {formatCurrency(total)}
               </Text>
             </>
           ) : (
@@ -88,7 +97,7 @@ export const Cart = ({ cartItems }: Props) => {
           )}
         </Price>
 
-        <Button onPress={() => alert('confirm')} disabled={cartIsEmpty}>
+        <Button onPress={() => alert('confirm')} disabled={!cartIsEmpty}>
           Confirmar pedido
         </Button>
       </Summary>

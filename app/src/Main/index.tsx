@@ -12,29 +12,71 @@ import {
   FooterContainer,
 } from './styles'
 import { Cart } from '../components/Cart'
-import { CartItem } from '../@types'
-import { products } from '../mocks/products'
+import { CartItem, Product } from '../@types'
 
 export const Main = () => {
   const [isTableModalVisible, setIsTableModalVisible] = useState(false)
   const [selectedTable, setSelectedTable] = useState('')
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      product: products[0],
-      quantity: 1,
-    },
-    {
-      product: products[1],
-      quantity: 2,
-    },
-  ])
+  const [cartItems, setCartItems] = useState<CartItem[]>([])
 
   const handleOpenModal = () => setIsTableModalVisible(true)
   const handleCloseModal = () => setIsTableModalVisible(false)
 
   const handleSaveTable = (table: string) => setSelectedTable(table)
 
-  const handleCancelOrder = () => setSelectedTable('')
+  const handleCancelOrder = () => {
+    setSelectedTable('')
+    setCartItems([])
+  }
+
+  const handleAddToCart = (product: Product) => {
+    if (!selectedTable) {
+      setIsTableModalVisible(true)
+    }
+
+    setCartItems((prevState) => {
+      const itemIndex = prevState.findIndex(
+        (cartItem) => cartItem.product._id === product._id,
+      )
+
+      if (itemIndex < 0) {
+        return [...prevState, { quantity: 1, product }]
+      }
+
+      const newCartItems = [...prevState]
+      const item = newCartItems[itemIndex]
+
+      newCartItems[itemIndex] = {
+        ...item,
+        quantity: item.quantity + 1,
+      }
+
+      return newCartItems
+    })
+  }
+
+  const handleRemoveCartItem = (product: Product) =>
+    setCartItems((prevState) => {
+      const itemIndex = prevState.findIndex(
+        (cartItem) => cartItem.product._id === product._id,
+      )
+
+      const item = prevState[itemIndex]
+      const newCartItems = [...prevState]
+
+      if (item.quantity === 1) {
+        newCartItems.splice(itemIndex, 1)
+
+        return newCartItems
+      }
+
+      newCartItems[itemIndex] = {
+        ...item,
+        quantity: item.quantity - 1,
+      }
+
+      return newCartItems
+    })
 
   return (
     <>
@@ -49,7 +91,7 @@ export const Main = () => {
         </CategoriesContainer>
 
         <MenuContainer>
-          <Menu />
+          <Menu onAddToCart={handleAddToCart} />
         </MenuContainer>
       </Container>
 
@@ -59,7 +101,13 @@ export const Main = () => {
             <Button onPress={handleOpenModal}>Novo pedido</Button>
           )}
 
-          {selectedTable && <Cart cartItems={cartItems} />}
+          {selectedTable && (
+            <Cart
+              cartItems={cartItems}
+              onAdd={handleAddToCart}
+              onRemoveItem={handleRemoveCartItem}
+            />
+          )}
         </FooterContainer>
       </Footer>
 
