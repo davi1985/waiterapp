@@ -21,63 +21,76 @@ type Props = {
 }
 
 export const Cart = ({ cartItems }: Props) => {
+  const cartIsEmpty = Boolean(cartItems.length)
+
   return (
     <>
-      <FlatList
-        data={cartItems}
-        keyExtractor={({ product }) => product._id}
-        renderItem={({ item: cartItem }) => (
-          <Item>
-            <ProductContainer>
-              <ProductImage
-                source={{
-                  uri: `http://192.168.0.100:3001/uploads/${cartItem.product.imagePath}`,
-                }}
-              />
+      {cartIsEmpty && (
+        <FlatList
+          data={cartItems}
+          keyExtractor={({ product }) => product._id}
+          style={{ marginBottom: 20, maxHeight: 150 }}
+          renderItem={({ item: cartItem }) => (
+            <Item>
+              <ProductContainer>
+                <ProductImage
+                  source={{
+                    uri: `http://192.168.0.100:3001/uploads/${cartItem.product.imagePath}`,
+                  }}
+                />
 
-              <QuantityContainer>
-                <Text size={14} color="#777">
-                  {cartItem.quantity}x
-                </Text>
-              </QuantityContainer>
+                <QuantityContainer>
+                  <Text size={14} color="#777">
+                    {cartItem.quantity}x
+                  </Text>
+                </QuantityContainer>
 
-              <ProductDetails>
-                <Text size={14} weight="600">
-                  {cartItem.product.name}
-                </Text>
+                <ProductDetails>
+                  <Text size={14} weight="600">
+                    {cartItem.product.name}
+                  </Text>
 
-                <Text size={14} color="#777">
-                  {formatCurrency(cartItem.product.price)}
-                </Text>
-              </ProductDetails>
-            </ProductContainer>
+                  <Text size={14} color="#777">
+                    {formatCurrency(cartItem.product.price)}
+                  </Text>
+                </ProductDetails>
+              </ProductContainer>
 
-            <Actions>
-              <TouchableOpacity onPress={() => alert('+')}>
-                <PlusCircle />
-              </TouchableOpacity>
+              <Actions>
+                <TouchableOpacity onPress={() => alert('+')}>
+                  <PlusCircle />
+                </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => alert('-')}>
-                <MinusCircle />
-              </TouchableOpacity>
-            </Actions>
-          </Item>
-        )}
-        showsVerticalScrollIndicator={false}
-      />
+                <TouchableOpacity onPress={() => alert('-')}>
+                  <MinusCircle />
+                </TouchableOpacity>
+              </Actions>
+            </Item>
+          )}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
 
       <Summary>
         <Price>
-          <Text size={14} color={'#777'}>
-            Total
-          </Text>
+          {cartIsEmpty ? (
+            <>
+              <Text color={'#777'}>Total</Text>
 
-          <Text weight="600" size={24}>
-            {formatCurrency(120)}
-          </Text>
+              <Text weight="600" size={20}>
+                {formatCurrency(120)}
+              </Text>
+            </>
+          ) : (
+            <Text style={{ textAlign: 'center' }}>
+              Seu carrinho está vazio!
+            </Text>
+          )}
         </Price>
 
-        <Button onPress={() => alert('confirm')}>Confirmar pedido</Button>
+        <Button onPress={() => alert('confirm')} disabled={cartIsEmpty}>
+          Confirmar pedido
+        </Button>
       </Summary>
     </>
   )

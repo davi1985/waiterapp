@@ -34,7 +34,9 @@ export const Summary = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-top: 16px;
 `
 
-export const Price = styled.View``
+export const Price = styled.View`
+  margin-right: 32px;
+  flex: 1;
+`
