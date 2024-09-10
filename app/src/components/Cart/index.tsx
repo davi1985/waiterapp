@@ -33,7 +33,7 @@ export const Cart = ({
 }: Props) => {
   const [orderConfirmedModalVisible, setOrderConfirmedModalVisible] =
     useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading] = useState(false)
 
   const cartIsEmpty = Boolean(cartItems.length)
 
