@@ -24,7 +24,7 @@ export const Main = () => {
 
   const handleSaveTable = (table: string) => setSelectedTable(table)
 
-  const handleCancelOrder = () => {
+  const handleResetOrder = () => {
     setSelectedTable('')
     setCartItems([])
   }
@@ -83,7 +83,7 @@ export const Main = () => {
       <Container>
         <Header
           selectedTable={selectedTable}
-          onCancelOrder={handleCancelOrder}
+          onCancelOrder={handleResetOrder}
         />
 
         <CategoriesContainer>
@@ -106,6 +106,7 @@ export const Main = () => {
               cartItems={cartItems}
               onAdd={handleAddToCart}
               onRemoveItem={handleRemoveCartItem}
+              onConfirmOrder={handleResetOrder}
             />
           )}
         </FooterContainer>

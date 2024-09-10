@@ -15,14 +15,26 @@ import { Button } from '../Button'
 import { PlusCircle } from '../Icons/PlusCircle'
 import { MinusCircle } from '../Icons/MinusCircle'
 import { formatCurrency } from '../../utils/formatCurrency'
+import { useState } from 'react'
+import { OrderConfirmedModal } from '../OrderConfirmedModal'
 
 type Props = {
   cartItems: CartItem[]
   onAdd: (product: Product) => void
   onRemoveItem: (product: Product) => void
+  onConfirmOrder: () => void
 }
 
-export const Cart = ({ cartItems, onAdd, onRemoveItem }: Props) => {
+export const Cart = ({
+  cartItems,
+  onAdd,
+  onRemoveItem,
+  onConfirmOrder,
+}: Props) => {
+  const [orderConfirmedModalVisible, setOrderConfirmedModalVisible] =
+    useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
   const cartIsEmpty = Boolean(cartItems.length)
 
   const total = cartItems.reduce(
@@ -30,8 +42,22 @@ export const Cart = ({ cartItems, onAdd, onRemoveItem }: Props) => {
     0,
   )
 
+  const handleConfirmOrder = () => {
+    setOrderConfirmedModalVisible(true)
+  }
+
+  const handleOk = () => {
+    setOrderConfirmedModalVisible(false)
+    onConfirmOrder()
+  }
+
   return (
     <>
+      <OrderConfirmedModal
+        visible={orderConfirmedModalVisible}
+        onOk={handleOk}
+      />
+
       {cartIsEmpty && (
         <FlatList
           data={cartItems}
@@ -97,7 +123,11 @@ export const Cart = ({ cartItems, onAdd, onRemoveItem }: Props) => {
           )}
         </Price>
 
-        <Button onPress={() => alert('confirm')} disabled={!cartIsEmpty}>
+        <Button
+          onPress={handleConfirmOrder}
+          disabled={!cartIsEmpty}
+          loading={isLoading}
+        >
           Confirmar pedido
         </Button>
       </Summary>
