@@ -15,3 +15,9 @@ export type CartItem = {
   product: Product
   quantity: number
 }
+
+export type Category = {
+  _id: string
+  name: string
+  icon: string
+}
