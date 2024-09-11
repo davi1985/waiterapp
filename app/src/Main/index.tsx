@@ -1,32 +1,55 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ActivityIndicator } from 'react-native'
 
 import { Button } from '../components/Button'
+import { Cart } from '../components/Cart'
 import { Categories } from '../components/Categories'
 import { Header } from '../components/Header'
+import { Empty } from '../components/Icons/Empty'
 import { Menu } from '../components/Menu'
 import { TableModal } from '../components/TableModal'
-import { Cart } from '../components/Cart'
+import { Text } from '../components/Text'
+
 import {
-  Container,
   CategoriesContainer,
-  MenuContainer,
+  CenteredContainer,
+  Container,
   Footer,
   FooterContainer,
-  CenteredContainer,
+  MenuContainer,
 } from './styles'
-import { CartItem, Product } from '../@types'
 
-import { products as mockProducts } from '../mocks/products'
-import { Empty } from '../components/Icons/Empty'
-import { Text } from '../components/Text'
+import { CartItem, Category, Product } from '../@types'
+import { httpRequest } from '../utils/httpRequest'
 
 export const Main = () => {
   const [isTableModalVisible, setIsTableModalVisible] = useState(false)
   const [selectedTable, setSelectedTable] = useState('')
   const [cartItems, setCartItems] = useState<CartItem[]>([])
-  const [isLoading] = useState(false)
-  const [products] = useState<Product[]>(mockProducts)
+  const [isLoading, setIsLoading] = useState(true)
+  const [products, setProducts] = useState<Product[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
+
+  useEffect(() => {
+    Promise.all([
+      httpRequest.get('/categories'),
+      httpRequest.get('http://192.168.0.100:3001/products'),
+    ]).then(([categoriesResponse, productsResponse]) => {
+      setCategories(categoriesResponse.data)
+      setProducts(productsResponse.data)
+      setIsLoading(false)
+    })
+  }, [])
+
+  const handleSelectCategory = async (categoryId: string) => {
+    const route = !categoryId
+      ? '/products'
+      : `/categories/${categoryId}/products`
+
+    const { data } = await httpRequest.get(route)
+
+    setProducts(data)
+  }
 
   const handleOpenModal = () => setIsTableModalVisible(true)
   const handleCloseModal = () => setIsTableModalVisible(false)
@@ -104,7 +127,10 @@ export const Main = () => {
         {!isLoading && (
           <>
             <CategoriesContainer>
-              <Categories />
+              <Categories
+                categories={categories}
+                onSelectCategory={handleSelectCategory}
+              />
             </CategoriesContainer>
 
             {products.length > 0 ? (
