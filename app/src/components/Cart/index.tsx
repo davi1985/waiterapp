@@ -17,12 +17,14 @@ import { MinusCircle } from '../Icons/MinusCircle'
 import { formatCurrency } from '../../utils/formatCurrency'
 import { useState } from 'react'
 import { OrderConfirmedModal } from '../OrderConfirmedModal'
+import { httpRequest } from '../../utils/httpRequest'
 
 type Props = {
   cartItems: CartItem[]
   onAdd: (product: Product) => void
   onRemoveItem: (product: Product) => void
   onConfirmOrder: () => void
+  selectedTable: string
 }
 
 export const Cart = ({
@@ -30,10 +32,11 @@ export const Cart = ({
   onAdd,
   onRemoveItem,
   onConfirmOrder,
+  selectedTable,
 }: Props) => {
   const [orderConfirmedModalVisible, setOrderConfirmedModalVisible] =
     useState(false)
-  const [isLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const cartIsEmpty = Boolean(cartItems.length)
 
@@ -42,7 +45,20 @@ export const Cart = ({
     0,
   )
 
-  const handleConfirmOrder = () => {
+  const handleConfirmOrder = async () => {
+    setIsLoading(true)
+
+    await httpRequest
+      .post('/orders', {
+        table: selectedTable,
+        products: cartItems.map(({ product, quantity }) => ({
+          product: product._id,
+          quantity: quantity,
+        })),
+      })
+      .catch((err) => console.log({ err }))
+
+    setIsLoading(false)
     setOrderConfirmedModalVisible(true)
   }
 

@@ -29,6 +29,7 @@ export const Main = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [products, setProducts] = useState<Product[]>([])
   const [categories, setCategories] = useState<Category[]>([])
+  const [isLoadingProducts, setIsLoadingProducts] = useState(false)
 
   useEffect(() => {
     Promise.all([
@@ -46,9 +47,12 @@ export const Main = () => {
       ? '/products'
       : `/categories/${categoryId}/products`
 
+    setIsLoadingProducts(true)
+
     const { data } = await httpRequest.get(route)
 
     setProducts(data)
+    setIsLoadingProducts(false)
   }
 
   const handleOpenModal = () => setIsTableModalVisible(true)
@@ -133,18 +137,26 @@ export const Main = () => {
               />
             </CategoriesContainer>
 
-            {products.length > 0 ? (
-              <MenuContainer>
-                <Menu onAddToCart={handleAddToCart} products={products} />
-              </MenuContainer>
-            ) : (
+            {isLoadingProducts ? (
               <CenteredContainer>
-                <Empty />
-
-                <Text color="#777" style={{ marginTop: 24 }}>
-                  Nenhum produto foi encontrado!
-                </Text>
+                <ActivityIndicator color={'#d73035'} size={'large'} />
               </CenteredContainer>
+            ) : (
+              <>
+                {products.length ? (
+                  <MenuContainer>
+                    <Menu onAddToCart={handleAddToCart} products={products} />
+                  </MenuContainer>
+                ) : (
+                  <CenteredContainer>
+                    <Empty />
+
+                    <Text color="#777" style={{ marginTop: 24 }}>
+                      Nenhum produto foi encontrado!
+                    </Text>
+                  </CenteredContainer>
+                )}
+              </>
             )}
           </>
         )}
@@ -164,6 +176,7 @@ export const Main = () => {
               onAdd={handleAddToCart}
               onRemoveItem={handleRemoveCartItem}
               onConfirmOrder={handleResetOrder}
+              selectedTable={selectedTable}
             />
           )}
         </FooterContainer>
