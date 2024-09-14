@@ -48,15 +48,13 @@ export const Cart = ({
   const handleConfirmOrder = async () => {
     setIsLoading(true)
 
-    await httpRequest
-      .post('/orders', {
-        table: selectedTable,
-        products: cartItems.map(({ product, quantity }) => ({
-          product: product._id,
-          quantity: quantity,
-        })),
-      })
-      .catch((err) => console.log({ err }))
+    await httpRequest.post('/orders', {
+      table: selectedTable,
+      products: cartItems.map(({ product, quantity }) => ({
+        product: product._id,
+        quantity: quantity,
+      })),
+    })
 
     setIsLoading(false)
     setOrderConfirmedModalVisible(true)
