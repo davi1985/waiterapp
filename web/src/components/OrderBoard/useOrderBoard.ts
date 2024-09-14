@@ -31,7 +31,6 @@ export const useOrderBoard = ({
     const status =
       selectedOrder?.status === 'WAITING' ? 'IN_PRODUCTION' : 'DONE'
 
-    await new Promise((resolve) => setTimeout(resolve, 3000))
     await httpRequest.patch(`/orders/${selectedOrder?._id}`, {
       status,
     })
@@ -47,7 +46,6 @@ export const useOrderBoard = ({
   const handleCancelOrder = async () => {
     setIsLoading(true)
 
-    await new Promise((resolve) => setTimeout(resolve, 3000))
     await httpRequest.delete(`/orders/${selectedOrder?._id}`)
 
     toast.success(`O pedido da mesa ${selectedOrder?.table} foi cancelado!`)
