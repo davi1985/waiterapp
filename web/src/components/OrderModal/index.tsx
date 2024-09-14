@@ -9,9 +9,17 @@ type Props = {
   visible: boolean
   onClose: () => void
   order: Order | null
+  onCancelOrder: () => Promise<void>
+  isLoading: boolean
 }
 
-export const OrderModal = ({ visible, onClose, order }: Props) => {
+export const OrderModal = ({
+  visible,
+  onClose,
+  order,
+  onCancelOrder,
+  isLoading,
+}: Props) => {
   const { total, iconByStatusMap } = useOrderModal({ onClose, order })
 
   return visible && order ? (
@@ -64,12 +72,18 @@ export const OrderModal = ({ visible, onClose, order }: Props) => {
         </OrderDetails>
 
         <Actions>
-          <button className="primary">
+          <button className="primary" disabled={isLoading}>
             <span>🧑‍🍳</span>
             <strong>Iniciar produção</strong>
           </button>
 
-          <button className="secondary">Cancelar Pedido</button>
+          <button
+            className="secondary"
+            onClick={onCancelOrder}
+            disabled={isLoading}
+          >
+            Cancelar Pedido
+          </button>
         </Actions>
       </Body>
     </Overlay>

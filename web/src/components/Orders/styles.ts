@@ -7,5 +7,4 @@ export const Container = styled.section`
   display: flex;
   gap: 2rem;
   padding: 0 0.5rem;
-  height: 450px;
 `

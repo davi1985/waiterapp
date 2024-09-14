@@ -7,15 +7,18 @@ type Props = {
   icon: string
   title: string
   orders: Order[]
+  onCancelOrder: (orderId: string) => void
 }
 
-export const OrdersBoard = ({ icon, title, orders }: Props) => {
+export const OrdersBoard = ({ icon, title, orders, onCancelOrder }: Props) => {
   const {
     isModalVisible,
     selectedOrder,
+    isLoading,
     handleOpenOrderModal,
     handleCloseOrderModal,
-  } = useOrderBoard()
+    handleCancelOrder,
+  } = useOrderBoard({ onCancelOrder })
 
   return (
     <Board>
@@ -23,6 +26,8 @@ export const OrdersBoard = ({ icon, title, orders }: Props) => {
         visible={isModalVisible}
         onClose={handleCloseOrderModal}
         order={selectedOrder}
+        onCancelOrder={handleCancelOrder}
+        isLoading={isLoading}
       />
 
       <header>
