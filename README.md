@@ -18,30 +18,31 @@ The project features both a mobile and a web application that complement each ot
 
 ## Techs
 
-* [React](https://reactjs.org/) ✅
-* [React Native](https://reactnative.dev/)
-* [Node.js](https://nodejs.org/en/) ✅
-* [TypeScript](https://www.typescriptlang.org/) ✅
-* [Expo](https://expo.dev/)
-* [Styled Components](https://styled-components.com) ✅
-* [MongoDB](https://www.mongodb.com) ✅
-* [Docker](https://www.docker.com/) ✅
+- [React](https://reactjs.org/) ✅
+- [React Native](https://reactnative.dev/) ✅
+- [Node.js](https://nodejs.org/en/) ✅
+- [TypeScript](https://www.typescriptlang.org/) ✅
+- [Expo](https://expo.dev/) ✅
+- [Styled Components](https://styled-components.com) ✅
+- [MongoDB](https://www.mongodb.com) ✅
+- [Docker](https://www.docker.com/) ✅
 
 ## How to use
 
-   ```
-   - Clone this repository:
-   $ git clone https://github.com/davi1985/waiterapp
+```
+- Clone this repository:
+$ git clone https://github.com/davi1985/waiterapp
 
-   - Navigate to directory:
-   $ cd waiterapp
+- Navigate to directory:
+$ cd waiterapp
 
-   - Go into each project directory and install the dependencies for each::
-   $ yarn install
-   
-   - Start the applications:
-   $ yarn dev
-   ```  
+- Go into each project directory and install the dependencies for each::
+$ yarn install
+
+- Start the applications:
+$ yarn dev
+```
+
 <hr/>
 
 <p align="center">
