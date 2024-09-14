@@ -16,6 +16,10 @@ export const Orders = () => {
     io.on('orders@new', (order) => {
       setOrders((prevState) => [...prevState, order])
     })
+
+    return () => {
+      io.removeListener('orders@new')
+    }
   }, [])
 
   useEffect(() => {
