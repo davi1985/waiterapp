@@ -13,8 +13,8 @@ export const useOrderModal = ({ onClose, order }: Props) => {
     { icon: string; label: string }
   > = {
     WAITING: { icon: '🕒', label: 'Fila de espera' },
-    IN_PROGRESS: { icon: '🧑‍🍳', label: 'Em preparação' },
-    COMPLETED: { icon: '✅', label: 'Pronto!' },
+    IN_PRODUCTION: { icon: '🧑‍🍳', label: 'Em preparação' },
+    DONE: { icon: '✅', label: 'Pronto!' },
   }
 
   useEffect(() => {

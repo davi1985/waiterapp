@@ -11,14 +11,16 @@ type Props = {
   order: Order | null
   onCancelOrder: () => Promise<void>
   isLoading: boolean
+  onChangeOrderStatus: () => Promise<void>
 }
 
 export const OrderModal = ({
   visible,
-  onClose,
   order,
-  onCancelOrder,
   isLoading,
+  onClose,
+  onCancelOrder,
+  onChangeOrderStatus,
 }: Props) => {
   const { total, iconByStatusMap } = useOrderModal({ onClose, order })
 
@@ -72,11 +74,23 @@ export const OrderModal = ({
         </OrderDetails>
 
         <Actions>
-          <button className="primary" disabled={isLoading}>
-            <span>🧑‍🍳</span>
-            <strong>Iniciar produção</strong>
-          </button>
+          {order.status !== 'DONE' && (
+            <button
+              className="primary"
+              disabled={isLoading}
+              onClick={onChangeOrderStatus}
+            >
+              <span>
+                {order.status === 'WAITING' && '🧑‍🍳'}
+                {order.status === 'IN_PRODUCTION' && '✅'}
+              </span>
 
+              <strong>
+                {order.status === 'WAITING' && 'Iniciar produção'}
+                {order.status === 'IN_PRODUCTION' && 'Finalizar pedido'}
+              </strong>
+            </button>
+          )}
           <button
             className="secondary"
             onClick={onCancelOrder}

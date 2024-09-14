@@ -12,11 +12,24 @@ export const Orders = () => {
   }, [])
 
   const waiting = orders.filter((order) => order.status === 'WAITING')
-  const inProduction = orders.filter((order) => order.status === 'IN_PROGRESS')
-  const done = orders.filter((order) => order.status === 'COMPLETED')
+  const inProduction = orders.filter(
+    (order) => order.status === 'IN_PRODUCTION',
+  )
+  const done = orders.filter((order) => order.status === 'DONE')
 
   const handleCancelOrder = (orderId: string) =>
     setOrders((prevState) => prevState.filter((order) => order._id !== orderId))
+
+  const handleStatusOrderChange = (
+    orderId: string,
+    status: Order['status'],
+  ) => {
+    setOrders((prevState) =>
+      prevState.map((order) =>
+        order._id === orderId ? { ...order, status } : order,
+      ),
+    )
+  }
 
   return (
     <Container>
@@ -25,6 +38,7 @@ export const Orders = () => {
         title="Fila de espera"
         orders={waiting}
         onCancelOrder={handleCancelOrder}
+        onChangeOrderStatus={handleStatusOrderChange}
       />
 
       <OrdersBoard
@@ -32,6 +46,7 @@ export const Orders = () => {
         title="Em preparação"
         orders={inProduction}
         onCancelOrder={handleCancelOrder}
+        onChangeOrderStatus={handleStatusOrderChange}
       />
 
       <OrdersBoard
@@ -39,6 +54,7 @@ export const Orders = () => {
         title="Pronto!"
         orders={done}
         onCancelOrder={handleCancelOrder}
+        onChangeOrderStatus={handleStatusOrderChange}
       />
     </Container>
   )

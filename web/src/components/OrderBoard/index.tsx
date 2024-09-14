@@ -8,9 +8,16 @@ type Props = {
   title: string
   orders: Order[]
   onCancelOrder: (orderId: string) => void
+  onChangeOrderStatus: (orderId: string, status: Order['status']) => void
 }
 
-export const OrdersBoard = ({ icon, title, orders, onCancelOrder }: Props) => {
+export const OrdersBoard = ({
+  icon,
+  title,
+  orders,
+  onCancelOrder,
+  onChangeOrderStatus,
+}: Props) => {
   const {
     isModalVisible,
     selectedOrder,
@@ -18,7 +25,8 @@ export const OrdersBoard = ({ icon, title, orders, onCancelOrder }: Props) => {
     handleOpenOrderModal,
     handleCloseOrderModal,
     handleCancelOrder,
-  } = useOrderBoard({ onCancelOrder })
+    handleChangeOrderStatus,
+  } = useOrderBoard({ onCancelOrder, onChangeOrderStatus })
 
   return (
     <Board>
@@ -28,6 +36,7 @@ export const OrdersBoard = ({ icon, title, orders, onCancelOrder }: Props) => {
         order={selectedOrder}
         onCancelOrder={handleCancelOrder}
         isLoading={isLoading}
+        onChangeOrderStatus={handleChangeOrderStatus}
       />
 
       <header>

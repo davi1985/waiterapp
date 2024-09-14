@@ -13,6 +13,6 @@ type Product = {
 export type Order = {
   _id: string
   table: string
-  status: 'WAITING' | 'IN_PROGRESS' | 'COMPLETED'
+  status: 'WAITING' | 'IN_PRODUCTION' | 'DONE'
   products: Product[]
 }
