@@ -1,22 +1,20 @@
 import { FlatList } from 'react-native'
-import { Text } from '../Text'
-import { Container, CategoryContainer, Icon } from './styles'
-import { useState } from 'react'
 import { Category } from '../../@types'
+import { Text } from '../Text'
+import { CategoryContainer, Container, Icon } from './styles'
+import { useCategories } from './useCategories'
 
-type Props = {
+export type CategoriesProps = {
   categories: Category[]
   onSelectCategory: (categoryId: string) => Promise<void>
 }
-export const Categories = ({ categories, onSelectCategory }: Props) => {
-  const [selectedCategory, setSelectedCategory] = useState('')
-
-  const handleSelectCategory = (categoryId: string) => {
-    const category = selectedCategory === categoryId ? '' : categoryId
-
-    setSelectedCategory(category)
-    onSelectCategory(category)
-  }
+export const Categories = ({
+  categories,
+  onSelectCategory,
+}: CategoriesProps) => {
+  const { selectedCategory, handleSelectCategory } = useCategories({
+    onSelectCategory,
+  })
 
   return (
     <Container>

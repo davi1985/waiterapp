@@ -34,11 +34,7 @@ export const ProductModal = ({
     onClose()
   }
 
-  if (!product) {
-    return null
-  }
-
-  return (
+  return product ? (
     <Modal
       visible={visible}
       animationType="slide"
@@ -100,5 +96,5 @@ export const ProductModal = ({
         </FooterContainer>
       </Footer>
     </Modal>
-  )
+  ) : null
 }

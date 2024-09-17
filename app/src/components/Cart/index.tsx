@@ -1,5 +1,10 @@
 import { FlatList, TouchableOpacity } from 'react-native'
 import { CartItem, Product } from '../../@types'
+import { formatCurrency } from '../../utils/formatCurrency'
+import { Button } from '../Button'
+import { MinusCircle } from '../Icons/MinusCircle'
+import { PlusCircle } from '../Icons/PlusCircle'
+import { OrderConfirmedModal } from '../OrderConfirmedModal'
 import { Text } from '../Text'
 import {
   Actions,
@@ -11,15 +16,9 @@ import {
   QuantityContainer,
   Summary,
 } from './styles'
-import { Button } from '../Button'
-import { PlusCircle } from '../Icons/PlusCircle'
-import { MinusCircle } from '../Icons/MinusCircle'
-import { formatCurrency } from '../../utils/formatCurrency'
-import { useState } from 'react'
-import { OrderConfirmedModal } from '../OrderConfirmedModal'
-import { httpRequest } from '../../utils/httpRequest'
+import { useCart } from './useCart'
 
-type Props = {
+export type CartProps = {
   cartItems: CartItem[]
   onAdd: (product: Product) => void
   onRemoveItem: (product: Product) => void
@@ -33,37 +32,19 @@ export const Cart = ({
   onRemoveItem,
   onConfirmOrder,
   selectedTable,
-}: Props) => {
-  const [orderConfirmedModalVisible, setOrderConfirmedModalVisible] =
-    useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-
-  const cartIsEmpty = Boolean(cartItems.length)
-
-  const total = cartItems.reduce(
-    (acc, item) => acc + item.quantity * item.product.price,
-    0,
-  )
-
-  const handleConfirmOrder = async () => {
-    setIsLoading(true)
-
-    await httpRequest.post('/orders', {
-      table: selectedTable,
-      products: cartItems.map(({ product, quantity }) => ({
-        product: product._id,
-        quantity: quantity,
-      })),
-    })
-
-    setIsLoading(false)
-    setOrderConfirmedModalVisible(true)
-  }
-
-  const handleOk = () => {
-    setOrderConfirmedModalVisible(false)
-    onConfirmOrder()
-  }
+}: CartProps) => {
+  const {
+    orderConfirmedModalVisible,
+    handleOk,
+    cartIsEmpty,
+    total,
+    handleConfirmOrder,
+    isLoading,
+  } = useCart({
+    cartItems,
+    onConfirmOrder,
+    selectedTable,
+  })
 
   return (
     <>

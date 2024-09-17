@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { FlatList } from 'react-native'
 
 import { Product } from '../../@types'
@@ -14,6 +13,7 @@ import {
 import { formatCurrency } from '../../utils/formatCurrency'
 import { PlusCircle } from '../Icons/PlusCircle'
 import { ProductModal } from '../ProductModal'
+import { useMenu } from './useMenu'
 
 type Props = {
   onAddToCart: (product: Product) => void
@@ -21,15 +21,12 @@ type Props = {
 }
 
 export const Menu = ({ onAddToCart, products }: Props) => {
-  const [isProductModalVisible, setIsProductModalVisible] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
-
-  const handleProductModalOpen = (product: Product) => {
-    setIsProductModalVisible(true)
-    setSelectedProduct(product)
-  }
-
-  const handleProductModalClose = () => setIsProductModalVisible(false)
+  const {
+    isProductModalVisible,
+    handleProductModalClose,
+    selectedProduct,
+    handleProductModalOpen,
+  } = useMenu()
 
   return (
     <>
