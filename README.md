@@ -48,3 +48,7 @@ $ yarn dev
 <p align="center">
   Made with 💚 by <a href="https://github.com/davi1985">Davi Silva</a>
 </p>
+
+## License
+
+This project is under the [MIT license](./LICENSE).
